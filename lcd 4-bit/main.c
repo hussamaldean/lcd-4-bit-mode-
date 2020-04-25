@@ -116,7 +116,7 @@ GPIOB->MODER|=GPIO_MODER_MODER5_0|GPIO_MODER_MODER7_0;
 GPIOB->BSRR=(RS<<16)|(EN<<16);;
 GPIOC->MODER|=GPIO_MODER_MODER4_0|GPIO_MODER_MODER5_0|GPIO_MODER_MODER6_0|GPIO_MODER_MODER7_0;
 }
-void lcd_nipple_write(char data, unsigned char control)
+void lcd_nibble_write(char data, unsigned char control)
 {
 GPIOC->BSRR|=0x00F00000; //clear data pins
 GPIOC->BSRR=data&0xF0;
@@ -146,16 +146,16 @@ void delay(int ms)
 //lcd commands
 void lcd_com(unsigned char c)
 	{
-lcd_nipple_write(c&0xF0,0); //upper data
-lcd_nipple_write(c<<4,0); //lower data
+lcd_nibble_write(c&0xF0,0); //upper data
+lcd_nibble_write(c<<4,0); //lower data
 if(c<4){delay(2);}
 else{delay(1);}
 }
 // send command to the lcd
 void lcd_data(char c)
 	{
-lcd_nipple_write(c&0xF0,RS);
-lcd_nipple_write(c<<4,RS);
+lcd_nibble_write(c&0xF0,RS);
+lcd_nibble_write(c<<4,RS);
 delay(1);
 }
 
